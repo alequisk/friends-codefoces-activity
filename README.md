@@ -1,21 +1,26 @@
 # Friends Codeforces Activity
 
-FCA é um notificador de quando seus amigos estão submetendo problemas na plataforma codeforces. A ideia do *tracker* é conseguir ter noção de quão ativo seus companheiros estão em relação a programação competitiva, sendo assim você consegue ser notificado de quando novas submissões enquanto usa normalmente o computador.
+FCA is a notifier that informs you when your friends submit problems on the Codeforces platform. The idea behind this tracker is to gain insight into how active your peers are in competitive programming. This way, you can be notified of new submissions while using your computer as usual.
 
 
-# Como isso funciona?
+## TODOs
 
-O programa faz requisições para a [API do codeforces](https://codeforces.com/apiHelp) periodicamente dos handles de seus amigos e verifica se há mudança na lista de submissões mais recentes. Caso haja alguma nova submissão, o programa irá enviar uma mensagem de todos aqueles que estarão codando naquele intervalo de tempo. 
+- [ ] Decouple handles from the code.
+- [ ] Create an installer for Linux/Windows.
+
+## How does it work?
+
+The program makes periodic requests to the [API do codeforces](https://codeforces.com/apiHelp) for your friends' handles and checks if there have been any changes in the list of the most recent submissions. If there is a new submission, the program will send a notification to everyone who will be coding during that time interval.
 
 <p align="center">
-  <img src="./image-notification.png" alt="Exemplo de notificação" width="738">
+  <img src="./image-notification.png" alt="Example notification" width="700">
 </p>
 
-# Comece a usar!
+## Getting Started
 
-Para começar a usar o programa você deve ter Go instalado na versão [v1.21.1](https://go.dev/doc/install) ou superior.
+To start using the program, you must have Go installed in version [v1.21.1](https://go.dev/doc/install) or higher.
 
-Defina os handles que você deseja monitorar no arquivo `friends.go` no caminho `internal/domain/checker`.
+Define the handles you want to monitor in the `friends.go` file in the `internal/domain/checker` path.
 
 ```golang
   var (
@@ -23,29 +28,29 @@ Defina os handles que você deseja monitorar no arquivo `friends.go` no caminho 
   )
 ```
 
-Você também pode mudar o intervalo de cada nova checkagem no arquivo `cmd/main.go` alterando o valor da variável `period_for_check`.
+You can also change the interval for each new check in the `cmd/main.go` file by modifying the value of the `period_for_check` variable.
 
-Baixe as depedências do projeto rodando o seguinte comando no terminal:
+Download the project's dependencies by running the following command in the terminal:
 
 ```sh
   go mod tidy
 ```
 
-Após isso compile o projeto para criar um executável standalone para rodar quando quiser:
+After that, compile the project to create a standalone executable to run whenever you want:
 
 ```sh
   go build cmd/main.go
 ```
 
-O comando irá gerar um binário com o nome *main* dentro da pasta do projeto e terá a extensão ".exe" apenas se você estiver no Windows. A forma de rodar o programa será dando dois cliques caso esteja na plataforma Windows e no Linux você pode abrir o terminal no caminho do projeto e digitar o comando `./main` que o programa irá começar a monitorar novas submissões.
+The command will generate a binary with the name main in the project folder and will have the ".exe" extension only if you are on Windows. To run the program, double-click it if you are on the Windows platform, and on Linux, you can open the terminal in the project's path and enter the `./main` command to start monitoring new submissions.
 
-## Limitações
+## Limitations
 
-Por conta da restrição da API do Codeforces para evitar ataques de DDoS, o programa é limitado de buscar submissões dos handles a cada 4 segundos, uma vez que o limite padrão da API é de 1 requisição a cada 2 segundos. Isso impede paralelismo nas chamadas e as fazendo demorar a checkagem caso a sua lista de amizade for muito grande.
+Due to Codeforces API restrictions to prevent DDoS attacks, the program is limited to fetching submissions for handles every 4 seconds since the API's default limit is 1 request every 2 seconds. This prevents parallelism in the calls and may cause delays in checking if your friends list is very large.
 
 
-## Sobre
+## About
 
-Não sou especialista em Golang mas esse é um projeto simples que foi útil tanto para praticar quanto manter o uso constante já que são sutis as notificações e você não se atrapalha quando chega uma nova notificação, além do programa ser bastante pequeno (cerca de 10mb o arquivo binário) e de baixíssimo consumo de recurso. Em alguns testes ele chegou a um pico de 4.5mb de uso de RAM e abaixou após o Garbage Collector entrar em ação.
+I'm not an expert in Golang, but this is a simple project that has been useful for both practice and constant use. The notifications are subtle, so they don't disrupt your workflow when a new notification arrives. The program is also quite small (around 10MB for the binary file) and has very low resource consumption. In some tests, it peaked at 4.5MB of RAM usage and decreased after the Garbage Collector kicked in.
 
-Qualquer sugestão ou melhorias no código podem ser feitas através de Pull Requests e estarei disposto a incorporar caso esteja de acordo com o intuito do programa.
+Any suggestions or code improvements can be made through Pull Requests, and I'll be willing to incorporate them if they align with the program's purpose.
