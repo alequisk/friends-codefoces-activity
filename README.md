@@ -24,7 +24,7 @@ Define the handles you want to monitor in the `friends.go` file in the `internal
 
 ```golang
   var (
-    handles = []string{"amigo1", "amigo2", "amigo3"}  // você pode adicionar mais ou menos amigos
+    handles = []string{"friend1", "friend2", "friend3"}  // You can add more or fewer friends
   )
 ```
 
