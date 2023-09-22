@@ -2,12 +2,6 @@
 
 FCA is a notifier that informs you when your friends submit problems on the Codeforces platform. The idea behind this tracker is to gain insight into how active your peers are in competitive programming. This way, you can be notified of new submissions while using your computer as usual.
 
-
-## TODOs
-
-- [ ] Decouple handles from the code.
-- [ ] Create an installer for Linux/Windows.
-
 ## How does it work?
 
 The program makes periodic requests to the [API do codeforces](https://codeforces.com/apiHelp) for your friends' handles and checks if there have been any changes in the list of the most recent submissions. If there is a new submission, the program will send a notification to everyone who will be coding during that time interval.
@@ -36,7 +30,9 @@ Download the project's dependencies by running the following command in the term
   go mod tidy
 ```
 
-After that, compile the project to create a standalone executable to run whenever you want:
+If you're on Windows, you can run `.\install\run.ps1` for build and run the project.
+
+Compile the project to create a standalone executable to run whenever you want:
 
 ```sh
   go build cmd/main.go
