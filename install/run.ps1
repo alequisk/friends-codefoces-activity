@@ -1,6 +1,6 @@
 
 $projectName = "main"
-$executableName = "$projectName.exe"
+$processName = "$projectName.exe"
 
 # Get the current script's directory
 $currentScriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -16,7 +16,7 @@ Write-Host "## Configuring to run FCA app." -ForegroundColor DarkGreen
 try {
   # Set the working directory to the project directory
   Set-Location $projectDirectory
-  if (-Not(Test-Path -Path $executableName -PathType Leaf)) {
+  if (-Not(Test-Path -Path $processName -PathType Leaf)) {
     if ($goInstalled) {
       Write-Host "- GOLang is installed on your system." -ForegroundColor DarkGreen
       Write-Host "- Building project..."
@@ -37,19 +37,18 @@ try {
     }
   }
 
+  # TODO: stop any other process if already running
+  # Write-Host "Stoping run app if is running"
+  # TASKKILL /IM $processName /F -ErrorAction SilentlyContinue
+
   Write-Output "- Put app to run in background..."
-  Start-Process $executableName -WindowStyle Hidden
+  Start-Process $processName -WindowStyle Hidden
 
-  if ($LASTEXITCODE -eq 0) {
-    Write-Host "- Done! You will be notified when your friends submit a problem." -ForegroundColor Green
-  }
-  else {
-    Write-Host "- An error occurred while running the process." -ForegroundColor Red
-  }
-
+  Write-Host "- Done! You will be notified when your friends submit a problem." -ForegroundColor Green
+  
 }
 catch {
   Write-Host $_.Exception.Message -ForegroundColor Red
-}
+} 
 
-
+Read-Host "Press any key to continue"
