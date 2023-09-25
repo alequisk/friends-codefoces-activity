@@ -12,33 +12,19 @@ The program makes periodic requests to the [API do codeforces](https://codeforce
 
 ## Getting Started
 
-To start using the program, you must have Go installed in version [v1.21.1](https://go.dev/doc/install) or higher.
+To start using the program, you must have Go installed in version [v1.21.1](https://go.dev/doc/install) or higher. Clone or download this projects for you computer and start the configuration.
 
-Define the handles you want to monitor in the `friends.go` file in the `internal/domain/checker` path.
-
-```golang
-  var (
-    handles = []string{"friend1", "friend2", "friend3"}  // You can add more or fewer friends
-  )
-```
-
-You can also change the interval for each new check in the `cmd/main.go` file by modifying the value of the `period_for_check` variable.
-
-Download the project's dependencies by running the following command in the terminal:
+In the project folder download the dependencies by running the following command in the terminal:
 
 ```sh
   go mod tidy
 ```
 
-If you're on Windows, you can run `.\install\run.ps1` for build and run the project.
+If you're on Windows, you can run `.\install\run.ps1 [handle list separeted by space]` to build and run the project monitoring the handles described.
 
-Compile the project to create a standalone executable to run whenever you want:
+If you're on Linux, you can build the project run `go buil ./cmd/main.go` and after you can run the app .`/main [handle list separeted by space]` for starting monitoring your friends. (Script to run will be code soon)
 
-```sh
-  go build cmd/main.go
-```
-
-The command will generate a binary with the name main in the project folder and will have the ".exe" extension only if you are on Windows. To run the program, double-click it if you are on the Windows platform, and on Linux, you can open the terminal in the project's path and enter the `./main` command to start monitoring new submissions.
+You can also change the interval for each new check in the `cmd/main.go` file by modifying the value of the `period_for_check` variable.
 
 ## Limitations
 
