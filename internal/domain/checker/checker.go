@@ -73,12 +73,14 @@ func (c *Checker) Run() {
 		var friends_coding []string
 		updated_subs := c.fectchSubmissionsByHandles()
 		for i := range updated_subs {
-			if subs[i] != updated_subs[i] {
-				friends_coding = append(friends_coding, handles[i])
+			// verify if last submission id has changed.
+			if updated_subs[i] != 0 && subs[i] != updated_subs[i] {
+				if subs[i] != 0 {
+					friends_coding = append(friends_coding, handles[i])
+				}
+				subs[i] = updated_subs[i]
 			}
 		}
-
-		subs = updated_subs
 
 		if len(friends_coding) > 0 {
 			log.Println("Notify that have new online friends")
