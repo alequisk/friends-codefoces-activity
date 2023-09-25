@@ -11,29 +11,33 @@ $projectDirectory = Join-Path -Path $currentScriptDirectory -ChildPath "..\"
 # Check if Go is installed
 $goInstalled = Get-Command go -ErrorAction SilentlyContinue
 
-Write-Host "## Configuring to run FCA app." -ForegroundColor DarkGreen
+Write-Host "> Configuring to run 'Friends Codeforces Activity' app."
 
 try {
+  if ($args.Count -eq 0) {
+    throw "Error: You must specify the handles that will be monitored after execute the executable: .\run.ps1 handle1 handle2"
+  }
+
   # Set the working directory to the project directory
   Set-Location $projectDirectory
   if (-Not(Test-Path -Path $processName -PathType Leaf)) {
     if ($goInstalled) {
-      Write-Host "- GOLang is installed on your system." -ForegroundColor DarkGreen
-      Write-Host "- Building project..."
+      Write-Host "> GoLang is installed on your system."
+      Write-Host "> Building project..."
     
       # Build your Go project
       $buildOutput = go build .\cmd\main.go
     
       if ($LASTEXITCODE -eq 0) {
-        Write-Host " - Go app build succeeded." -ForegroundColor DarkGreen
+        Write-Host "> App build succeeded."
       }
       else {
-        Write-Host " - Go app build failed." -ForegroundColor DarkRed
+        Write-Host "> App build failed." -ForegroundColor DarkRed
         throw $buildOutput
       }
     }
     else {
-      throw "Go is not installed on your system. Please install Go before building your project."
+      throw "Error: GoLang is not installed on your system. Please install GoLang before building your project."
     }
   }
 
@@ -41,14 +45,12 @@ try {
   # Write-Host "Stoping run app if is running"
   # TASKKILL /IM $processName /F -ErrorAction SilentlyContinue
 
-  Write-Output "- Put app to run in background..."
-  Start-Process $processName -WindowStyle Hidden
+  Write-Output "> Putting app to run in background..."
+  Start-Process $processName -WindowStyle Hidden -ArgumentList $args
 
-  Write-Host "- Done! You will be notified when your friends submit a problem." -ForegroundColor Green
-  
+  Write-Host "> Done! You will be notified when your friends submit a problem." -ForegroundColor DarkGreen
+  Read-Host "Press enter to continue"
 }
 catch {
   Write-Host $_.Exception.Message -ForegroundColor Red
 } 
-
-Read-Host "Press any key to continue"

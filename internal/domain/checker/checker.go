@@ -18,12 +18,13 @@ const (
 type Checker struct {
 	client      *http.Client
 	periodCheck time.Duration
+	handles     []string
 }
 
 func (c Checker) fectchSubmissionsByHandles() []uint64 {
-	var submissions_id = make([]uint64, len(handles))
+	var submissions_id = make([]uint64, len(c.handles))
 
-	for index, handle := range handles {
+	for index, handle := range c.handles {
 		submission_id, err := c.retrieveLastSubmission(handle)
 		if err != nil {
 			submissions_id[index] = 0
@@ -76,7 +77,7 @@ func (c *Checker) Run() {
 			// verify if last submission id has changed.
 			if updated_subs[i] != 0 && subs[i] != updated_subs[i] {
 				if subs[i] != 0 {
-					friends_coding = append(friends_coding, handles[i])
+					friends_coding = append(friends_coding, c.handles[i])
 				}
 				subs[i] = updated_subs[i]
 			}
@@ -110,9 +111,10 @@ func notify(friends []string) {
 	beeep.Notify("Amigo(s) on-line", message, "assets/warning.png")
 }
 
-func NewChecker(client *http.Client, period time.Duration) *Checker {
+func NewChecker(client *http.Client, period time.Duration, handles []string) *Checker {
 	return &Checker{
 		client:      client,
 		periodCheck: period,
+		handles:     handles,
 	}
 }
