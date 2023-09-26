@@ -107,7 +107,7 @@ func notify(friends []string) {
 	if len(friends) > 1 {
 		verb = "estão"
 	}
-	message := fmt.Sprintf("%s %s condando neste momento,", names, verb)
+	message := fmt.Sprintf("%s %s codando neste momento,", names, verb)
 	beeep.Notify("Amigo(s) on-line", message, "assets/warning.png")
 }
 
